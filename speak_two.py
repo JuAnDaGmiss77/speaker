@@ -1,22 +1,23 @@
+#import library
 import speech_recognition as sr
 
-# Crea un objeto de reconocimiento de voz
+# Initialize recognizer class (for recognizing the speech)
 r = sr.Recognizer()
 
-while True:
-    # Utiliza el micrófono como fuente de audio
-    with sr.Microphone() as source:
-        print("say something...")
-        audio = r.listen(source)
+# Reading Audio file as source
+# listening the audio file and store in audio_text variable
 
+with sr.AudioFile('I-dont-know.wav') as source:
+    
+    audio_text = r.listen(source)
+    
+# recoginize_() method will throw a request error if the API is unreachable, hence using exception handling
     try:
-        texto = r.recognize_google(audio, language='es')
-
-        # print text
-        print(texto)
-
-    except sr.UnknownValueError:
-        print("Can not understand the audio")
-
-    except sr.RequestError as e:
-        print("Error requesting the results of the speech recognition service: {0}".format(e))
+        
+        # using google speech recognition
+        text = r.recognize_google(audio_text)
+        print('Converting audio transcripts into text ...')
+        print(text)
+     
+    except:
+         print('Sorry.. run again...')

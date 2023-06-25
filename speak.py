@@ -1,27 +1,31 @@
 import speech_recognition as sr
 
 def recognize_voice():
-    print('comming')
-    # object
+    print('Starting...')
+    # Create a voice recognition object
     r = sr.Recognizer()
 
     while True:
-        # Utiliza el micrófono como fuente de audio
         with sr.Microphone() as source:
-            print("say something...")
+            print("Say something...")
             audio = r.listen(source)
 
         try:
-            # Use speech recognition to convert audio to text
-            texto = r.recognize_google(audio, language='es')
+            # Use Google's speech recognition to convert audio into text
+            text = r.recognize_google(audio, language='en')
 
             # Print the recognized text
-            print(texto)
+            print(text)
+
+            # Check if the word "stop" was said
+            if "stop" in text.lower():
+                print("Stopping voice recognition...")
+                break  # Exit the while loop to stop the recognition
 
         except sr.UnknownValueError:
-            print("Can not understand the audio")
+            print("Could not understand the audio")
 
         except sr.RequestError as e:
-            print("Error requesting the results of the speech recognition service; {0}".format(e))
+            print("Error requesting the results of the speech recognition service: {0}".format(e))
 
 recognize_voice()
